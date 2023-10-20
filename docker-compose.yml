@@ -1,7 +1,7 @@
 version: "3.3"
 
 services:
-  zaychik:
+  university-timetable:
     image: eclipse-temurin:21-alpine
     container_name: UniversityTimetable
     restart: unless-stopped
