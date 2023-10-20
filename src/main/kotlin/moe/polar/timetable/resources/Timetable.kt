@@ -6,7 +6,6 @@ import io.ktor.server.application.call
 import io.ktor.server.request.receive
 import io.ktor.server.resources.delete
 import io.ktor.server.resources.get
-import io.ktor.server.resources.patch
 import io.ktor.server.resources.post
 import io.ktor.server.response.respond
 import io.ktor.server.response.respondText
@@ -23,6 +22,8 @@ import moe.polar.timetable.db.tables.Lessons
 import moe.polar.timetable.extensions.LOCAL_TZ
 import moe.polar.timetable.extensions.weekType
 import moe.polar.timetable.db.query
+import moe.polar.timetable.extensions.isUniqueConstraintViolation
+import org.jetbrains.exposed.exceptions.ExposedSQLException
 import org.jetbrains.exposed.sql.and
 
 @Resource("timetable")
@@ -72,28 +73,31 @@ fun Route.configurePrivateTimetableResource() {
         val body = call.receive<Requests.Post>()
         val lessons = body.data
 
-        query {
-            lessons.forEach { lesson ->
-                Lesson.new {
-                    dayOfWeek = lesson.dayOfWeek
-                    weekType = lesson.weekType
-                    name = lesson.name
-                    type = lesson.type
-                    majorGroup = lesson.majorGroup
-                    subGroup = lesson.subGroup
-                    auditorium = lesson.auditorium
-                    teacher = lesson.teacher
-                    startsAt = lesson.startsAt
-                    endsAt = lesson.endsAt
+        try {
+            query {
+                lessons.forEach { lesson ->
+                    Lesson.new {
+                        dayOfWeek = lesson.dayOfWeek
+                        weekType = lesson.weekType
+                        name = lesson.name
+                        type = lesson.type
+                        majorGroup = lesson.majorGroup
+                        subGroup = lesson.subGroup
+                        auditorium = lesson.auditorium
+                        teacher = lesson.teacher
+                        startsAt = lesson.startsAt
+                        endsAt = lesson.endsAt
+                    }
                 }
             }
+        } catch (e: ExposedSQLException) {
+            if (e.isUniqueConstraintViolation())
+                call.respondText("Unique constraint violation detected!", status = HttpStatusCode.BadRequest)
+            else
+                throw e
         }
 
         call.respond(HttpStatusCode.OK)
-    }
-
-    patch<TimetableRoute> {
-        call.respondText("this is PATCH response")
     }
 
     delete<TimetableRoute> {
