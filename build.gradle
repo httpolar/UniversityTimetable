@@ -6,7 +6,7 @@ plugins {
 }
 
 group "moe.polar.timetable"
-version "0.0.1"
+version "0.0.2"
 
 mainClassName = "moe.polar.timetable.ApplicationKt"
 
