@@ -12,6 +12,7 @@ mainClassName = "moe.polar.timetable.ApplicationKt"
 
 application {
     mainClass.set(mainClassName)
+    applicationDefaultJvmArgs = ["-Dfile.encoding=UTF-8"]
 }
 
 def isDevelopment = project.ext.has("development")
@@ -61,6 +62,9 @@ dependencies {
     implementation "org.postgresql:postgresql:$postgres_version"
     implementation "com.zaxxer:HikariCP:5.0.1"
     implementation "io.ktor:ktor-server-cio-jvm"
+    implementation "io.insert-koin:koin-core:$koin_version"
+    implementation "io.insert-koin:koin-ktor:$koin_ktor"
+    implementation "io.insert-koin:koin-logger-slf4j:$koin_ktor"
     implementation "ch.qos.logback:logback-classic:$logback_version"
     testImplementation "io.ktor:ktor-server-tests-jvm"
     testImplementation "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
