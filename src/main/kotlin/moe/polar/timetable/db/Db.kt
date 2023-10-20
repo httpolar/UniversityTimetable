@@ -21,19 +21,21 @@ suspend fun <T> query(
 }
 
 fun hikariProperties(filename: String = "hikari.properties"): Properties {
-    val props = Properties().apply {
-        setProperty("dataSourceClassName", "org.postgresql.ds.PGSimpleDataSource")
-        setProperty("dataSource.user", "username")
-        setProperty("dataSource.password", "password")
-        setProperty("dataSource.databaseName", "timetable")
-        setProperty("dataSource.portNumber", "5432")
-        setProperty("dataSource.serverName", "127.0.0.1")
-    }
-
+    val props = Properties()
     val file = File(filename)
+
     if (file.exists()) {
         props.load(file.reader())
     } else {
+        props.apply {
+            setProperty("dataSourceClassName", "org.postgresql.ds.PGSimpleDataSource")
+            setProperty("dataSource.user", "username")
+            setProperty("dataSource.password", "password")
+            setProperty("dataSource.databaseName", "timetable")
+            setProperty("dataSource.portNumber", "5432")
+            setProperty("dataSource.serverName", "127.0.0.1")
+        }
+
         file.writer().use {
             props.store(it, "University Timetable API")
             it.close()
