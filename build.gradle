@@ -34,6 +34,7 @@ java {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib"
+    implementation "io.ktor:ktor-server-cio-jvm"
     implementation "io.ktor:ktor-server-core-jvm"
     implementation "io.ktor:ktor-server-auth-jvm"
     implementation "io.ktor:ktor-server-auth-jwt-jvm"
@@ -60,8 +61,8 @@ dependencies {
     implementation "org.jetbrains.exposed:exposed-kotlin-datetime:$exposed_version"
     implementation "org.jetbrains.kotlinx:kotlinx-datetime:0.4.1"
     implementation "org.postgresql:postgresql:$postgres_version"
+    implementation "org.xerial:sqlite-jdbc:$sqlite_version"
     implementation "com.zaxxer:HikariCP:5.0.1"
-    implementation "io.ktor:ktor-server-cio-jvm"
     implementation "io.insert-koin:koin-core:$koin_version"
     implementation "io.insert-koin:koin-ktor:$koin_ktor"
     implementation "io.insert-koin:koin-logger-slf4j:$koin_ktor"
