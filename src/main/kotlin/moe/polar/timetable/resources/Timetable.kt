@@ -19,7 +19,7 @@ import kotlinx.serialization.Contextual
 import kotlinx.serialization.Serializable
 import moe.polar.timetable.db.entities.Lesson
 import moe.polar.timetable.db.entities.LessonSerializable
-import moe.polar.timetable.db.tables.LessonsTable
+import moe.polar.timetable.db.tables.Lessons
 import moe.polar.timetable.extensions.LOCAL_TZ
 import moe.polar.timetable.extensions.weekType
 import moe.polar.timetable.db.query
@@ -56,9 +56,9 @@ fun Route.configurePublicTimetableResource() {
         val result = query {
             Lesson.find {
                 if (id != null) {
-                    (LessonsTable.id eq id)
+                    (Lessons.id eq id)
                 } else {
-                    (LessonsTable.weekType eq date.weekType) and (LessonsTable.dayOfWeek eq date.dayOfWeek)
+                    (Lessons.weekType eq date.weekType) and (Lessons.dayOfWeek eq date.dayOfWeek)
                 }
             }.map { lesson -> lesson.toSerializable() }
         }
@@ -101,7 +101,7 @@ fun Route.configurePrivateTimetableResource() {
 
         val deletedLessons = buildList {
             query {
-                Lesson.find { LessonsTable.id inList body.ids }.forEach { lesson ->
+                Lesson.find { Lessons.id inList body.ids }.forEach { lesson ->
                     add(lesson.toSerializable())
                     lesson.delete()
                 }

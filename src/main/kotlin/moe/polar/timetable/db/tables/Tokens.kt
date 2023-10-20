@@ -4,7 +4,7 @@ import org.jetbrains.exposed.dao.id.UUIDTable
 import org.jetbrains.exposed.sql.kotlin.datetime.CurrentDateTime
 import org.jetbrains.exposed.sql.kotlin.datetime.datetime
 
-object TokensTable : UUIDTable() {
+object Tokens : UUIDTable() {
     val token = text("token").uniqueIndex()
     val createdAt = datetime("created_at").defaultExpression(CurrentDateTime)
     val accessedAt = datetime("accessed_at").defaultExpression(CurrentDateTime)

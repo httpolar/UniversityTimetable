@@ -6,8 +6,8 @@ import io.ktor.server.engine.embeddedServer
 import moe.polar.timetable.db.generateDataSource
 import moe.polar.timetable.db.hikariProperties
 import moe.polar.timetable.db.query
-import moe.polar.timetable.db.tables.LessonsTable
-import moe.polar.timetable.db.tables.TokensTable
+import moe.polar.timetable.db.tables.Lessons
+import moe.polar.timetable.db.tables.Tokens
 import moe.polar.timetable.plugins.configureHTTP
 import moe.polar.timetable.plugins.configureMonitoring
 import moe.polar.timetable.plugins.configureRouting
@@ -24,7 +24,7 @@ suspend fun main() {
     Database.connect(dataSource)
 
     query {
-        SchemaUtils.createMissingTablesAndColumns(LessonsTable, TokensTable)
+        SchemaUtils.createMissingTablesAndColumns(Lessons, Tokens)
     }
 
     embeddedServer(CIO, port = 8080, host = "127.0.0.1", module = Application::module)

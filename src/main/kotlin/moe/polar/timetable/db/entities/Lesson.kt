@@ -7,7 +7,7 @@ import kotlinx.serialization.Contextual
 import kotlinx.serialization.EncodeDefault
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.Serializable
-import moe.polar.timetable.db.tables.LessonsTable
+import moe.polar.timetable.db.tables.Lessons
 import moe.polar.timetable.enums.LessonType
 import moe.polar.timetable.enums.WeekType
 import org.jetbrains.exposed.dao.UUIDEntity
@@ -15,18 +15,18 @@ import org.jetbrains.exposed.dao.UUIDEntityClass
 import org.jetbrains.exposed.dao.id.EntityID
 
 class Lesson(id: EntityID<UUID>) : UUIDEntity(id) {
-    companion object : UUIDEntityClass<Lesson>(LessonsTable)
+    companion object : UUIDEntityClass<Lesson>(Lessons)
 
-    var name by LessonsTable.name
-    var type by LessonsTable.type
-    var dayOfWeek by LessonsTable.dayOfWeek
-    var weekType by LessonsTable.weekType
-    var majorGroup by LessonsTable.majorGroup
-    var subGroup by LessonsTable.subGroup
-    var auditorium by LessonsTable.auditorium
-    var teacher by LessonsTable.teacher
-    var startsAt by LessonsTable.startsAt
-    var endsAt by LessonsTable.endsAt
+    var name by Lessons.name
+    var type by Lessons.type
+    var dayOfWeek by Lessons.dayOfWeek
+    var weekType by Lessons.weekType
+    var majorGroup by Lessons.majorGroup
+    var subGroup by Lessons.subGroup
+    var auditorium by Lessons.auditorium
+    var teacher by Lessons.teacher
+    var startsAt by Lessons.startsAt
+    var endsAt by Lessons.endsAt
 
     fun toSerializable(): LessonSerializable {
         return LessonSerializable(
